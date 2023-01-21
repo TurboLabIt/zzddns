@@ -41,14 +41,17 @@ if [ "$ZZDDNS_PROVIDER" = "duckdns" ]; then
     fxCatastrophicError "CURL error ##${CURL_RESULT}## | Page output: #${CURL_RETRIVED_PAGE}# "
   fi
   
-  fxOK "Success! Updating the IP file..."
-  echo "${FX_NEW_IP_ADDRESS}" > "${FX_IP_ADDRESS_FILE}"
-
+  fxOK "Success! CURL returned ##${CURL_RESULT}## | Page output: #${CURL_RETRIVED_PAGE}# "
+  
 else
 
   fxCatastrophicError "DDNS provider ##$ZZDDNS_PROVIDER## is unknown"
 fi
 
+
+fxTitle "Updating the IP file..."
+echo "${FX_NEW_IP_ADDRESS}" > "${FX_IP_ADDRESS_FILE}"
+cat "${FX_IP_ADDRESS_FILE}"
 
 fxEndFooter
 
