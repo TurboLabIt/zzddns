@@ -9,9 +9,11 @@ fxConfigLoader "$1"
 
 
 fxTitle "Current profile"
+ZZDDNS_PASSWORD_HIDDEN=$(fxPasswordHide "${ZZDDNS_PASSWORD}")
+
 echo "🏢 DDNS Provider:    ##${ZZDDNS_PROVIDER}##"
 echo "👤 Username:         ##${ZZDDNS_USERNAME}##"
-echo "🔑 Pass:             ##$(fxPasswordHide \"{ZZDDNS_PASSWORD}\")##"
+echo "🔑 Pass:             ##${ZZDDNS_PASSWORD_HIDDEN}##"
 echo "📛 Domain:           ##${ZZDDNS_DOMAIN}##"
 
 
