@@ -1,6 +1,6 @@
 # zzddns
 
-A configuration-based command to keep your DDNS up-to-date with your dynamic IP address
+A configuration-based command to keep your DDNS up-to-date with the system dynamic IP address
 
 ## How to
 
