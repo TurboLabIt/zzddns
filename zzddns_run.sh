@@ -23,23 +23,26 @@ fi
 
 
 fxCheckIpAddressChanged "${IP_FILE}"
-
-
 if [ -z "$FX_NEW_IP_ADDRESS" ]; then
   fxEndFooter
+  exit
 fi
 
 
 if [ "$ZZDDNS_PROVIDER" = "duckdns" ]; then
   
   fxTitle "🦆 DuckDNS update for ##$ZZDDNS_DOMAIN##..."
-  curl -L "https://www.duckdns.org/update?domains=${ZZDDNS_DOMAIN}&token${ZZDDNS_PASSWORD}&ip="
+  CURL_RETRIVED_PAGE=$(curl -Ls "https://www.duckdns.org/update?domains=${ZZDDNS_DOMAIN}&token=${ZZDDNS_PASSWORD}&ip=")
+  CURL_RESULT="$?"
   
-  if [ "$?" = 0 ]; then
+  if [ "$CURL_RESULT" != 0 ] || [ "${CURL_RETRIVED_PAGE}" != "OK" ]; then
   
-    fxOK "Success! Updating the IP file..."
-    echo "${FX_NEW_IP_ADDRESS}" > "${IP_FILE}"
+    echo "" > "${IP_FILE}"
+    fxCatastrophicError "CURL error ##${CURL_RESULT}## | Page output: #${CURL_RETRIVED_PAGE}# "
   fi
+  
+  fxOK "Success! Updating the IP file..."
+  echo "${FX_NEW_IP_ADDRESS}" > "${FX_IP_ADDRESS_FILE}"
 
 else
 
