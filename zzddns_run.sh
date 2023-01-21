@@ -33,9 +33,11 @@ fi
 if [ "$ZZDDNS_PROVIDER" = "duckdns" ]; then
   
   fxTitle "🦆 DuckDNS update for ##$ZZDDNS_DOMAIN##..."
-  echo curl -L "https://www.duckdns.org/update?domains=${ZZDDNS_DOMAIN}&token${ZZDDNS_PASSWORD}&ip="
+  curl -L "https://www.duckdns.org/update?domains=${ZZDDNS_DOMAIN}&token${ZZDDNS_PASSWORD}&ip="
   
-  if [ "$?" != 0 ]; then
+  if [ "$?" = 0 ]; then
+  
+    fxOK "Success! Updating the IP file..."
     echo "${FX_NEW_IP_ADDRESS}" > "${IP_FILE}"
   fi
 
