@@ -1,0 +1,12 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+## Update the DDNS at every reboot/power-on
+@reboot root sleep 20 && bash "/usr/local/turbolab.it/zzddns/cron/cron.sh" > /dev/null 2>&1
+@reboot root sleep 45 && bash "/usr/local/turbolab.it/zzddns/cron/cron.sh" > /dev/null 2>&1
+@reboot root sleep 90 && bash "/usr/local/turbolab.it/zzddns/cron/cron.sh" > /dev/null 2>&1
+
+## Periodically update DDNS
+*/3 * * * * root bash "/usr/local/turbolab.it/zzddns/cron/cron.sh" > /dev/null 2>&1
+
+## 👇🏻 If the last entry is missing a newline, cron will consider it broken and refuse to run it 👇🏻
