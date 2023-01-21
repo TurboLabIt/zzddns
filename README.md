@@ -1,2 +1,10 @@
 # zzddns
-A configuration-based command to keep your DDNS updated with your dynamic IP address
+
+A configuration-based command to keep your DDNS up-to-date with your dynamic IP address
+
+## How to
+
+````shell
+wget https://raw.githubusercontent.com/TurboLabIt/zzddns/master/setup.sh?$(date +%s) -O - | sudo bash && sudo cp /usr/local/turbolab.it/zzddns/webstackup.default.conf /etc/turbolab.it/zzddns.conf && nano /etc/turbolab.it/zzddns.conf && zzddns
+
+````
