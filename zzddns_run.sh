@@ -15,6 +15,7 @@ echo "🏢 DDNS Provider:    ##${ZZDDNS_PROVIDER}##"
 echo "👤 Username:         ##${ZZDDNS_USERNAME}##"
 echo "🔑 Pass:             ##${ZZDDNS_PASSWORD_HIDDEN}##"
 echo "📛 Domain:           ##${ZZDDNS_DOMAIN}##"
+echo "💨 Post exec:        ##${ZZDDNS_POST_UPDATE_SCRIPT}##"
 
 
 if [ -z "$1" ]; then
@@ -54,6 +55,18 @@ fi
 fxTitle "Updating the IP file..."
 echo "${FX_NEW_IP_ADDRESS}" > "${FX_IP_ADDRESS_FILE}"
 cat "${FX_IP_ADDRESS_FILE}"
+
+
+fxTitle "💨 Running the post-update script..."
+if [ ! -z "${ZZDDNS_POST_UPDATE_SCRIPT}" ]; then
+
+  fxOK "Running ##${ZZDDNS_POST_UPDATE_SCRIPT}##..."
+  bash ${ZZDDNS_POST_UPDATE_SCRIPT}
+  
+else
+
+  fxInfo "No post-update script configured"
+fi
 
 fxEndFooter
 
