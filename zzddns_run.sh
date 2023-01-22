@@ -32,20 +32,24 @@ if [ -z "$FX_NEW_IP_ADDRESS" ]; then
 fi
 
 
-if [ "$ZZDDNS_PROVIDER" = "duckdns" ]; then
-  
+if [ -z "$ZZDDNS_PROVIDER" ]; then
+
+  fxWarning "No ZZDDNS_PROVIDER selected. No DDNS update for you!"
+
+elif [ "$ZZDDNS_PROVIDER" = "duckdns" ]; then
+
   fxTitle "🦆 DuckDNS update for ##$ZZDDNS_DOMAIN##..."
   CURL_RETRIVED_PAGE=$(curl -Ls "https://www.duckdns.org/update?domains=${ZZDDNS_DOMAIN}&token=${ZZDDNS_PASSWORD}&ip=")
   CURL_RESULT="$?"
-  
+
   if [ "$CURL_RESULT" != 0 ] || [ "${CURL_RETRIVED_PAGE}" != "OK" ]; then
-  
+
     echo "" > "${IP_FILE}"
-    fxCatastrophicError "CURL error ##${CURL_RESULT}## | Page output: #${CURL_RETRIVED_PAGE}# "
+    fxCatastrophicError "CURL error ##${CURL_RESULT}## | Page output: ##${CURL_RETRIVED_PAGE}##"
   fi
-  
-  fxOK "Success! CURL returned ##${CURL_RESULT}## | Page output: #${CURL_RETRIVED_PAGE}# "
-  
+
+  fxOK "Success! CURL returned ##${CURL_RESULT}## | Page output: ##${CURL_RETRIVED_PAGE}##"
+
 else
 
   fxCatastrophicError "DDNS provider ##$ZZDDNS_PROVIDER## is unknown"
@@ -61,8 +65,8 @@ fxTitle "💨 Running the post-update script..."
 if [ ! -z "${ZZDDNS_POST_UPDATE_SCRIPT}" ]; then
 
   fxOK "Running ##${ZZDDNS_POST_UPDATE_SCRIPT}##..."
-  bash ${ZZDDNS_POST_UPDATE_SCRIPT}
-  
+  bash "${ZZDDNS_POST_UPDATE_SCRIPT}"
+
 else
 
   fxInfo "No post-update script configured"
