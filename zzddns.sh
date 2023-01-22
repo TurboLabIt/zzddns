@@ -1,2 +1,38 @@
 #!/usr/bin/env bash
-sudo -u root -H bash "/usr/local/turbolab.it/zzddns/zzddns_run.sh" "$@"
+
+function runOne()
+{
+  sudo -u root -H bash "/usr/local/turbolab.it/zzddns/zzddns_run.sh" "$@"
+}
+
+
+if [ "$1" = "default" ]; then
+  
+  runOne
+  
+elif [ ! -z "$1" ]; then
+
+  runOne "$@"
+  
+else
+
+  for FILE_FULLPATH in /etc/turbolab.it/zzddns*.conf; do
+    
+    if [ "${FILE_FULLPATH}" = "/etc/turbolab.it/zzddns.conf" ]; then
+    
+      runOne
+    
+    else  
+      
+      PROFILE_NAME=$(basename "${FILE_FULLPATH}")
+      PROFILE_NAME=${PROFILE_NAME#zzddns-}
+      PROFILE_NAME=${PROFILE_NAME#zzddns.profile.}
+      PROFILE_NAME=${PROFILE_NAME%.*}
+      runOne "${PROFILE_NAME}"
+      
+    fi
+    
+  done
+  
+fi
+
