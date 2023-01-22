@@ -16,13 +16,13 @@ elif [ ! -z "$1" ]; then
   
 else
 
+  if [ -f "/etc/turbolab.it/zzddns.conf" ]; then
+      runOne
+  fi  
+
   for FILE_FULLPATH in /etc/turbolab.it/zzddns*.conf; do
     
-    if [ "${FILE_FULLPATH}" = "/etc/turbolab.it/zzddns.conf" ]; then
-    
-      runOne
-    
-    else  
+    if [ "${FILE_FULLPATH}" != "/etc/turbolab.it/zzddns.conf" ]; then 
       
       PROFILE_NAME=$(basename "${FILE_FULLPATH}")
       PROFILE_NAME=${PROFILE_NAME#zzddns-}
