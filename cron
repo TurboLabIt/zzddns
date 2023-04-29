@@ -1,3 +1,4 @@
+MAILTO=""
 SHELL=/bin/bash
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
@@ -10,4 +11,3 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 */3 * * * * root bash "/usr/local/turbolab.it/bash-fx/cron-run.sh" "zzddns" "zzddns.sh" > /dev/null 2>&1
 
 ## 👇🏻 If the last entry is missing a newline, cron will consider it broken and refuse to run it 👇🏻
-
